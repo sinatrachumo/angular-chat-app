@@ -17,7 +17,7 @@ const initialMessages: Message[] = [];
 type IMessageOperation = (messages: Message[]) => Message[];
 
 @Injectable()
-export class MessageService {
+export class MessagesService {
   newMessages: Subject<Message> = new Subject<Message>();
   messages: Observable<Message[]>; //emits array of most recent messages
   updates: Subject<any> = new Subject<any>();
@@ -83,4 +83,4 @@ export class MessageService {
     );
   }
 }
-export const messageServiceInjectables: Array<any> = [MessageService];
+export const messageServiceInjectables: Array<any> = [MessagesService];

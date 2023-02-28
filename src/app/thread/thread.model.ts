@@ -2,10 +2,10 @@ import { uuid } from '../util/uuid';
 import { Message } from '../message/message.model';
 
 export class Thread {
-  id: string;
-  lastMessage: Message | any;
-  name: string;
-  avatarSrc: string;
+  id?: string | any;
+  lastMessage?: Message | any;
+  name?: string | any;
+  avatarSrc?: string | any;
 
   constructor(
     avatarSrc: string,

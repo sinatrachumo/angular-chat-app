@@ -11,7 +11,7 @@ export class ThreadService {
   threads: Observable<{ [key: string]: Thread }> | any; //Observable object will have key-value pairs, where the keys are strings and the values are of type "Thread"
   orderedThreads: Observable<Thread[]> | any; //observable that emits array of threads sorted by time of last message
   currentThread: Subject<Thread> = new BehaviorSubject<Thread>(new Thread(''));
-  currentThreadMessages: Observable<Message[]> | any; //emits array ofMessage
+  currentThreadMessages: Observable<Message[]> | any; //emits array of Message
 
   constructor(public messagesService: MessagesService) {
     this.threads = messagesService.messages.pipe(
@@ -63,11 +63,11 @@ export class ThreadService {
     this.currentThread.subscribe(this.messagesService.markThreadAsRead);
   }
 
-  setCurrentThread(newThread: Thread): void {
+  setCurrentThread(newThread: Thread): any {
     this.currentThread.next(newThread);
   }
 
-  setcurrentThread(newThread: Thread): void {
+  setcurrentThread(newThread: Thread): any {
     this.currentThread.next(newThread);
   }
 }

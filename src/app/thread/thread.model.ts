@@ -10,11 +10,12 @@ export class Thread {
   constructor(
     avatarSrc: string,
     id?: string,
-    name?: string | any
-    //lastMessage?: Message
+    name?: string | any,
+    lastMessage?: Message
   ) {
     this.id = id || uuid();
     this.name = name;
     this.avatarSrc = avatarSrc;
+    this.lastMessage = lastMessage;
   }
 }

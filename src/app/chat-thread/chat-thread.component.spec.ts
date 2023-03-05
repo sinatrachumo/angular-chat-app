@@ -27,7 +27,7 @@ describe('ChatThreadComponent', () => {
     avatarSrc: 'string',
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mockThreadService = jasmine.createSpyObj('ThreadService', [
       'setcurrentThread',
       'currentThread',

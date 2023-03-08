@@ -25,6 +25,7 @@ import { ChatPageComponent } from './chat-page/chat-page.component';
     FromNowPipe,
     ChatPageComponent,
     ChatNavBarComponent,
+    FromNowPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
@@ -34,7 +35,7 @@ import { ChatPageComponent } from './chat-page/chat-page.component';
     MessagesService,
     ThreadService,
   ],
-  exports: [ChatNavBarComponent],
+  exports: [ChatNavBarComponent, FromNowPipe, ChatPageComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

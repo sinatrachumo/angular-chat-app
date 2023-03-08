@@ -4,7 +4,7 @@
       <div class="panel panel-default">
         <div class="panel-heading top-bar">
           <div class="panel-title-container">
-            <h3 class="panel-title">
+            <h3 class="panel-title" *ngIf="currentThread && currentThread.name">
               <span class="glyphicon glyphicon-comment"></span>
               Chat - {{ currentThread.name }}
             </h3>

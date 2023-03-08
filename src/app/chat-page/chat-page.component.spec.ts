@@ -19,7 +19,7 @@ describe('ChatPageComponent', () => {
       declarations: [
         // mockComponent(ChatNavBarComponent),
         ChatPageComponent,
-        //ChatNavBarComponent,
+        ChatNavBarComponent,
         ChatThreadsComponent,
         ChatWindowComponent,
       ],

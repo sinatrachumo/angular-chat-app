@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AppModule } from '../app.module';
+import { NgModule } from '@angular/core';
 import { ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { Input } from '@angular/core';
 import { Message } from '../message/message.model';
 import { MessagesService } from '../message/messages.service';
 import { UsersService } from '../user/users.service';
@@ -11,25 +15,26 @@ import { Thread } from '../thread/thread.model';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
 import { ChatWindowComponent } from './chat-window.component';
 
-let fakecurrentThread: Subject<Thread>;
 class ThreadServiceStub {
-  //fakecurrentThread = new Subject<Thread>();
-  currentThreadMessages() {
-    return of([
-      {
-        // author: me,
-        // sentAt: moment().subtract(45, 'minutes').toDate(),
-        text: 'Yet let me weep for such a feeling loss.',
-        // thread: tLadycap,
-      },
-    ] as Message[]);
-  }
-  currentThread(): Observable<Thread> {
-    fakecurrentThread = new Subject<Thread>();
-    return fakecurrentThread;
-    // return of({ id: 1, name: 'Thread 1' });
-  }
+  currentThreadMessages: any = {
+    subscribe: () => {
+      return [
+        { id: '1', text: 'Message 1' },
+        { id: '2', text: 'Message 2' },
+      ];
+    },
+  };
+  currentThread: any = {
+    subscribe: () => {},
+  };
 }
+
+class UserServiceStub {
+  currentUser: any = {
+    subscribe: () => {},
+  };
+}
+
 class messagesServiceStub {
   addMessage() {
     return Message;
@@ -40,40 +45,29 @@ describe('ChatWindowComponent', () => {
   let component: ChatWindowComponent;
   let fixture: ComponentFixture<ChatWindowComponent>;
   let messagesService: jasmine.SpyObj<MessagesService>;
-  let usersService: jasmine.SpyObj<UsersService>;
-  let fakecurrentThread: Subject<Thread>;
 
   beforeEach(async () => {
-    const usersServiceSpy = jasmine.createSpyObj('UsersService', [
-      'currentUser',
-    ]);
-
     await TestBed.configureTestingModule({
       declarations: [ChatWindowComponent, ChatMessageComponent],
+      imports: [FormsModule],
       providers: [
         { provide: MessagesService, useClass: messagesServiceStub },
         { provide: ThreadService, useClass: ThreadServiceStub },
-        { provide: UsersService, useValue: usersServiceSpy },
+        { provide: UsersService, useClass: UserServiceStub },
       ],
     }).compileComponents();
+  });
 
-    messagesService = TestBed.inject(
-      MessagesService
-    ) as jasmine.SpyObj<MessagesService>;
-    usersService = TestBed.inject(UsersService) as jasmine.SpyObj<UsersService>;
+  afterEach(() => {
+    fixture.destroy();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChatWindowComponent);
+    fixture.detectChanges();
     component = fixture.componentInstance;
     component.draftMessage = new Message();
     component.messages = of([]);
-    //component.currentThread = new Thread('1', 'Thread 1', '');
-    //spyOn(ThreadServiceStub, 'currentThread').and.callThrough();
-
-    // component.currentUser = new User('1', 'User 1');
-
-    fixture.detectChanges();
   });
 
   it('should create', () => {

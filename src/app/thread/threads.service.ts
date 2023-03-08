@@ -45,7 +45,9 @@ export class ThreadService {
       combineLatest(
         messagesService.messages,
         (currentThread: Thread, messages: Message[]) => {
-          if (currentThread && messages.length > 0) {
+          console.log('messages', messages);
+          console.log('currentThread', currentThread);
+          if (currentThread && messages.length > 0 && messages[0].thread) {
             return _.chain(messages)
               .filter(
                 (message: Message) => message.thread.id === currentThread.id

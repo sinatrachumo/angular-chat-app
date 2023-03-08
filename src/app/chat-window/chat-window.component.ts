@@ -7,6 +7,7 @@ import { UsersService } from '../user/users.service';
 import { User } from '../user/user.model';
 import { ThreadService } from '../thread/threads.service';
 import { Thread } from '../thread/thread.model';
+import { NgForm } from '@angular/forms';
 import { AppModule } from '../app.module';
 import { BehaviorSubject } from 'rxjs';
 import { Input } from '@angular/core';
@@ -19,7 +20,7 @@ import { ChatMessageComponent } from '../chat-message/chat-message.component';
   styleUrls: ['./chat-window.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatWindowComponent implements OnInit, OnDestroy {
+export class ChatWindowComponent implements OnInit {
   messages: Observable<any> | any;
   currentThread: Thread | any;
   draftMessage: Message | any;
@@ -32,10 +33,8 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     public el: ElementRef
   ) {}
   ngOnInit(): void {
-    console.log('service', this.threadsService.currentThread);
     //if (this.threadsService.currentThread instanceof BehaviorSubject) {
     this.messages = this.threadsService.currentThreadMessages;
-    console.log('messages', this.messages);
     // this.threadsService.currentThreadMessages.subscribe();
     this.draftMessage = new Message();
     this.threadsService.currentThread.subscribe((thread: Thread) => {
@@ -50,13 +49,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       setTimeout(() => this.scrollToBottom())
     );
   }
-  ngOnDestroy(): void {
-    this.messages = null;
-    this.currentThread = null;
-    this.draftMessage = null;
-    this.currentUser = null;
-    this.messages.unsubscribe();
-  }
+
   onEnter(event: any): void {
     this.sendMessage();
     event.preventDefault();

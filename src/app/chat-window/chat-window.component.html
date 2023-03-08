@@ -28,7 +28,11 @@
               (keydown.enter)="onEnter($event)"
               [(ngModel)]="draftMessage.text"
             />
-            <span class="input-group-btn" (click)="onEnter($event)">Send</span>
+            <span class="input-group-btn">
+              <button class="btn-chat" (click)="onEnter($event)">
+                Send
+              </button></span
+            >
           </div>
         </div>
       </div>

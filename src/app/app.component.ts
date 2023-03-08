@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChatPageComponent } from './chat-page/chat-page.component';
 import { UsersService } from './user/users.service';
 import { ThreadService } from './thread/threads.service';
 import { MessagesService } from './message/messages.service';

@@ -10,7 +10,7 @@ import { Message } from '../message/message.model';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-chat-nav-bar',
+  selector: 'chat-nav-bar',
   templateUrl: './chat-nav-bar.component.html',
   styleUrls: ['./chat-nav-bar.component.css'],
 })

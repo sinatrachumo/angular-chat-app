@@ -3,12 +3,12 @@ import { Thread } from '../thread/thread.model';
 import { User } from '../user/user.model';
 
 export class Message {
-  id: string;
-  sentAt: Date;
-  isRead: boolean;
-  author: User;
-  text: string;
-  thread: Thread;
+  id: string | any;
+  sentAt: Date | any;
+  isRead: boolean | any;
+  author: User | any;
+  text: string | any;
+  thread: Thread | any;
 
   constructor(obj?: any) {
     this.id = (obj && obj.id) || uuid();

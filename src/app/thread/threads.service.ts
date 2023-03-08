@@ -10,7 +10,9 @@ import * as _ from 'lodash';
 export class ThreadService {
   threads: Observable<{ [key: string]: Thread }> | any; //Observable object will have key-value pairs, where the keys are strings and the values are of type "Thread"
   orderedThreads: Observable<Thread[]> | any; //observable that emits array of threads sorted by time of last message
-  currentThread: Subject<Thread> = new BehaviorSubject<Thread>(new Thread(''));
+  currentThread: Subject<Thread> = new BehaviorSubject<Thread | any>(
+    new Thread('')
+  );
   currentThreadMessages: Observable<Message[]> | any; //emits array of Message
 
   constructor(public messagesService: MessagesService) {
@@ -60,15 +62,11 @@ export class ThreadService {
       )
     );
 
-    this.currentThread.subscribe(this.messagesService.markThreadAsRead);
+    //this.currentThread.subscribe(this.messagesService.markThreadAsRead);
   }
 
   setCurrentThread(newThread: Thread): any {
     this.currentThread.next(newThread);
   }
-
-  setcurrentThread(newThread: Thread): any {
-    this.currentThread.next(newThread);
-  }
 }
-export const threadsServiceInjectables: Array<any> = [ThreadService];
+export const threadServiceInjectables: Array<any> = [ThreadService];

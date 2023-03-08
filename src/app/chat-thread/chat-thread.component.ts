@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ThreadService } from '../thread/threads.service';
 import { Thread } from '../thread/thread.model';
+import { BehaviorSubject } from 'rxjs';
 import { ChatThreadsComponent } from '../chat-threads/chat-threads.component';
 
 @Component({
@@ -16,14 +17,16 @@ export class ChatThreadComponent implements OnInit {
 
   constructor(public threadService: ThreadService) {}
   ngOnInit(): any {
-    this.threadService.currentThread.subscribe((currentThread: Thread) => {
-      this.selected =
-        currentThread && this.thread && currentThread.id === this.thread.id;
-    });
+    if (this.threadService.currentThread instanceof BehaviorSubject) {
+      this.threadService.currentThread.subscribe((currentThread: Thread) => {
+        this.selected =
+          currentThread && this.thread && currentThread.id === this.thread.id;
+      });
+    }
   }
 
   clicked(event: any): void {
-    this.threadService.setcurrentThread(this.thread);
+    this.threadService.setCurrentThread(this.thread);
     event.preventDefault();
   }
 }

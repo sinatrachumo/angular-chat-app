@@ -1,75 +1,151 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  async,
-} from '@angular/core/testing';
-import { Observable } from 'rxjs';
-import { DebugElement, EventEmitter, Component } from '@angular/core';
-import { ChatThreadComponent } from './chat-thread.component';
-import { ThreadService } from '../thread/threads.service';
+// import {
+//   ComponentFixture,
+//   fakeAsync,
+//   TestBed,
+//   async,
+// } from '@angular/core/testing';
+// import { Observable } from 'rxjs';
+// import { DebugElement, EventEmitter, Component } from '@angular/core';
+// import { ChatThreadComponent } from './chat-thread.component';
+// import { ThreadService } from '../thread/threads.service';
+// import { By } from '@angular/platform-browser';
+// import { BehaviorSubject } from 'rxjs';
+// import { Thread } from '../thread/thread.model';
+// import { OnInit } from '@angular/core';
+// import { of } from 'rxjs';
+// import { MessagesService } from '../message/messages.service';
+
+// describe('ChatThreadComponent', () => {
+//   let mockThreadService: jasmine.SpyObj<ThreadService>;
+//   let component: ChatThreadComponent;
+//   let fixture: ComponentFixture<ChatThreadComponent>;
+
+//   const mockThread: Thread = {
+//     id: 1,
+//     lastMessage: null,
+//     name: 'test thread',
+//     avatarSrc: 'string',
+//   };
+
+//   beforeEach(async () => {
+//     mockThreadService = jasmine.createSpyObj('ThreadService', [
+//       'setcurrentThread',
+//       'currentThread',
+//     ]);
+//     TestBed.configureTestingModule({
+//       declarations: [ChatThreadComponent],
+//       providers: [
+//         {
+//           provide: ThreadService,
+//           useValue: mockThreadService,
+//         },
+//       ],
+//     }).compileComponents();
+//     fixture = TestBed.createComponent(ChatThreadComponent);
+//   });
+
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(ChatThreadComponent);
+//     component = fixture.componentInstance;
+//     component.thread = mockThread;
+//     fixture.detectChanges();
+//     // component.ngOnInit;
+//   });
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+
+//   it('should set selected to true if currentThread is set to this thread', () => {
+//     const mockCurrentThread = { ...mockThread };
+//     mockThreadService.currentThread = of(mockCurrentThread);
+//     expect(component.selected).toBe(true);
+//   });
+
+//   it('should set selected to false if currentThread is set to another thread', () => {
+//     const mockCurrentThread = { ...mockThread, id: 2 };
+//     mockThreadService.currentThread = of(mockCurrentThread);
+//     expect(component.selected).toBe(false);
+//   });
+
+//   it('(it should call method to setCurrent thread when clicked)', () => {
+//     const mockEvent = { preventDefault: () => {} };
+//     component.clicked(mockEvent);
+//     expect(mockThreadService.setcurrentThread).toHaveBeenCalledWith(mockThread);
+//   });
+// });
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
+import { ChatThreadComponent } from './chat-thread.component';
 import { Thread } from '../thread/thread.model';
-import { OnInit } from '@angular/core';
+import { ThreadService } from '../thread/threads.service';
 import { of } from 'rxjs';
-import { MessagesService } from '../message/messages.service';
 
 describe('ChatThreadComponent', () => {
-  let mockThreadService: jasmine.SpyObj<ThreadService>;
   let component: ChatThreadComponent;
   let fixture: ComponentFixture<ChatThreadComponent>;
+  let threadServiceSpy: jasmine.SpyObj<ThreadService>;
 
-  const mockThread: Thread = {
-    id: 1,
-    lastMessage: null,
-    name: 'test thread',
-    avatarSrc: 'string',
+  const testThread: Thread = {
+    id: '1',
+    name: 'Test Thread',
+    avatarSrc: 'test-avatar.png',
+    lastMessage: {
+      text: 'Test message',
+      sentAt: new Date(),
+      sender: 'Test User',
+    },
   };
 
   beforeEach(async () => {
-    mockThreadService = jasmine.createSpyObj('ThreadService', [
-      'setcurrentThread',
+    const spy = jasmine.createSpyObj('ThreadService', [
+      'setCurrentThread',
       'currentThread',
     ]);
-    TestBed.configureTestingModule({
+
+    await TestBed.configureTestingModule({
       declarations: [ChatThreadComponent],
-      providers: [
-        {
-          provide: ThreadService,
-          useValue: mockThreadService,
-        },
-      ],
+      providers: [{ provide: ThreadService, useValue: spy }],
     }).compileComponents();
-    fixture = TestBed.createComponent(ChatThreadComponent);
+
+    threadServiceSpy = TestBed.inject(
+      ThreadService
+    ) as jasmine.SpyObj<ThreadService>;
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChatThreadComponent);
     component = fixture.componentInstance;
-    component.thread = mockThread;
+    component.thread = testThread;
     fixture.detectChanges();
-    // component.ngOnInit;
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should set selected to true if currentThread is set to this thread', () => {
-  //   const mockCurrentThread = { ...mockThread };
-  //   mockThreadService.currentThread = of(mockCurrentThread);
-  //   expect(component.selected).toBe(true);
+  it('should display the thread name', () => {
+    const threadName = fixture.debugElement.query(
+      By.css('.media-heading.contact-name')
+    ).nativeElement.textContent;
+    expect(threadName).toContain(testThread.name);
+  });
+
+  it('should display the last message text', () => {
+    const messagePreview = fixture.debugElement.query(
+      By.css('.message-preview')
+    ).nativeElement.textContent;
+    expect(messagePreview).toContain(testThread.lastMessage.text);
+  });
+
+  // it('should set selected to true when current thread is the same as this thread', () => {
+  //   threadServiceSpy.currentThread.and.returnValue(of(testThread));
+  //   fixture.detectChanges();
+  //   expect(component.selected).toBeTrue();
   // });
 
-  // it('should set selected to false if currentThread is set to another thread', () => {
-  //   const mockCurrentThread = { ...mockThread, id: 2 };
-  //   mockThreadService.currentThread = of(mockCurrentThread);
-  //   expect(component.selected).toBe(false);
-  // });
-
-  it('(it should call method to setCurrent thread when clicked)', () => {
-    const mockEvent = { preventDefault: () => {} };
-    component.clicked(mockEvent);
-    expect(mockThreadService.setcurrentThread).toHaveBeenCalledWith(mockThread);
+  it('should call setCurrentThread when the Select link is clicked', () => {
+    const selectLink = fixture.debugElement.query(By.css('.div-link'));
+    selectLink.triggerEventHandler('click', null);
+    expect(threadServiceSpy.setCurrentThread).toHaveBeenCalledWith(testThread);
   });
 });

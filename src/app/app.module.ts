@@ -29,10 +29,12 @@ import { ChatPageComponent } from './chat-page/chat-page.component';
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
     UsersService,
+
     userServiceInjectables,
     MessagesService,
     ThreadService,
   ],
+  exports: [ChatNavBarComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

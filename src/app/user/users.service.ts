@@ -9,7 +9,7 @@ import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Injectable()
 export class UsersService {
-  currentUser: Subject<User | null> = new BehaviorSubject<User | null>(null); //setting up stream, BehaviorSubject requires an initial value and stores the current value and emits it to the new subscribers , has special value in that is stores the last value
+  currentUser: Subject<User | any> = new BehaviorSubject<User | any>(null); //setting up stream, BehaviorSubject requires an initial value and stores the current value and emits it to the new subscribers , has special value in that is stores the last value
 
   public setCurrentUser(newUser: User): any {
     this.currentUser.next(newUser);

@@ -7,6 +7,8 @@ import { UsersService } from '../user/users.service';
 import { User } from '../user/user.model';
 import { ThreadService } from '../thread/threads.service';
 import { Thread } from '../thread/thread.model';
+import { BehaviorSubject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
 
 @Component({
@@ -28,12 +30,15 @@ export class ChatWindowComponent implements OnInit {
     public el: ElementRef
   ) {}
   ngOnInit(): void {
+    console.log('service', this.threadsService.currentThread);
+    //if (this.threadsService.currentThread instanceof BehaviorSubject) {
     this.messages = this.threadsService.currentThreadMessages;
-    this.threadsService.currentThreadMessages.subscribe();
+    console.log('messages', this.messages);
+    // this.threadsService.currentThreadMessages.subscribe();
     this.draftMessage = new Message();
-    this.threadsService.currentThread.subscribe(
-      (thread) => (this.currentThread = thread)
-    );
+    this.threadsService.currentThread.subscribe((thread: Thread) => {
+      this.currentThread = thread;
+    });
 
     this.usersService.currentUser.subscribe(
       (user) => (this.currentUser = user)

@@ -12,8 +12,7 @@ import { FromNowPipe } from '../pipes/from-now.pipe';
   styleUrls: ['./chat-message.component.css'],
 })
 export class ChatMessageComponent implements OnInit {
-  @Input()
-  message: Message | any;
+  @Input() message: Message | any;
   currentUser: User | any;
   incoming: boolean | any;
 
@@ -21,13 +20,17 @@ export class ChatMessageComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.usersService.currentUser;
-    if (currentUser) {
-      currentUser.subscribe((user) => {
-        this.currentUser = user;
-        if (this.message.author && user) {
-          this.incoming = this.message.author.id !== user.id;
-        }
-      });
-    }
+    console.log(this.currentUser);
+    // if (currentUser) {
+    currentUser.subscribe((user) => {
+      this.currentUser = user;
+      if (this.message.author && user) {
+        this.incoming = this.message.author.id !== user.id;
+      }
+    });
+    console.log(this.currentUser);
+    //console.log(this.currentUser);
+
+    // }
   }
 }

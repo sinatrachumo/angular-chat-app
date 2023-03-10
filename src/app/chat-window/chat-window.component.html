@@ -27,6 +27,7 @@
               placeholder="Write your message here..."
               (keydown.enter)="onEnter($event)"
               [(ngModel)]="draftMessage.text"
+              name="message"
             />
             <span class="input-group-btn">
               <button class="btn-chat" (click)="onEnter($event)">

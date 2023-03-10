@@ -13,6 +13,7 @@ export class UsersService {
 
   public setCurrentUser(newUser: User): any {
     this.currentUser.next(newUser);
+    console.log(this.currentUser);
   }
 }
 

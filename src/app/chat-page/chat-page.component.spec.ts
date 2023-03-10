@@ -4,6 +4,8 @@ import { ChatThreadsComponent } from '../chat-threads/chat-threads.component';
 import { ChatWindowComponent } from '../chat-window/chat-window.component';
 import { MessagesService } from '../message/messages.service';
 import { UsersService } from '../user/users.service';
+import { AppComponent } from '../app.component';
+
 //import { mockComponent } from '../utils/mock-component';
 import { Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,12 +19,14 @@ describe('ChatPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        AppComponent,
         // mockComponent(ChatNavBarComponent),
         ChatPageComponent,
         ChatNavBarComponent,
         ChatThreadsComponent,
         ChatWindowComponent,
       ],
+      imports: [FormsModule],
       providers: [MessagesService, UsersService],
     }).compileComponents();
   }));

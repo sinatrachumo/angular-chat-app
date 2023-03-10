@@ -8,12 +8,10 @@ import * as _ from 'lodash';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
-  threads: Observable<{ [key: string]: Thread }> | any; //Observable object will have key-value pairs, where the keys are strings and the values are of type "Thread"
-  orderedThreads: Observable<Thread[]> | any; //observable that emits array of threads sorted by time of last message
-  currentThread: Subject<Thread> = new BehaviorSubject<Thread | any>(
-    new Thread('')
-  );
-  currentThreadMessages: Observable<Message[]> | any; //emits array of Message
+  threads: Observable<{ [key: string]: Thread }>; //Observable object will have key-value pairs, where the keys are strings and the values are of type "Thread"
+  orderedThreads: Observable<Thread[]>; //observable that emits array of threads sorted by time of last message
+  currentThread: Subject<Thread> = new BehaviorSubject<Thread>(new Thread(''));
+  currentThreadMessages: Observable<Message[]>; //emits array of Message
 
   constructor(public messagesService: MessagesService) {
     this.threads = messagesService.messages.pipe(

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, map } from 'rxjs';
-import { Thread } from './thread.model';
 import { Message } from '../message/message.model';
+import { Thread } from './thread.model';
 import { MessagesService } from '../message/messages.service';
 import { combineLatest } from 'rxjs/operators';
 import * as _ from 'lodash';

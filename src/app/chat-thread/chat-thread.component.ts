@@ -16,16 +16,15 @@ export class ChatThreadComponent implements OnInit {
   constructor(private threadService: ThreadService) {}
 
   ngOnInit(): void {
-    console.log(
-      'constructor',
-      this.threadService.currentThread.constructor.name
-    );
-    if (this.threadService.currentThread instanceof BehaviorSubject<string>) {
-      this.threadService.currentThread.subscribe((currentThread: Thread) => {
-        this.selected =
-          currentThread && this.thread && currentThread.id === this.thread.id;
-      });
-    }
+    // console.log(
+    //   'constructor',
+    //   this.threadService.currentThread.constructor.name
+    // );
+
+    this.threadService.currentThread.subscribe((currentThread: Thread) => {
+      this.selected =
+        currentThread && this.thread && currentThread.id === this.thread.id;
+    });
   }
 
   clicked(event: Event): void {

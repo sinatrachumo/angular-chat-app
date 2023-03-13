@@ -16,14 +16,14 @@ import { ChatMessageComponent } from '../chat-message/chat-message.component';
 import { ChatWindowComponent } from './chat-window.component';
 import { MockInstance, MockProvider } from 'ng-mocks';
 
-const ThreadServiceStub = {
-  currentThreadMessages: () => {
-    return of([
-      { id: '1', text: 'Message 1' },
-      { id: '2', text: 'Message 2' },
-    ]);
-  },
-};
+// const ThreadServiceStub = {
+//   currentThreadMessages: () => {
+//     return of([
+//       { id: '1', text: 'Message 1' },
+//       { id: '2', text: 'Message 2' },
+//     ]);
+//   },
+// };
 
 class UserServiceStub {
   currentUser: any = {
